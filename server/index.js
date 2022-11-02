@@ -9,20 +9,21 @@ import postRoutes from './routes/posts.js';
 // use express middleware to connect to application
 const app = express();
 
-//set up starting path for all the routes inside posts.js
-app.use('/posts', postRoutes);
-
 // setting up bodyParser so it can properly send the requests
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
+
+// set up starting path for all the routes inside posts.js
+// make sure cors is ABOVE your routes!!!
+app.use('/posts', postRoutes);
 
 // connect server application to a real database. Mongodb is going to host our DB on their cloud
 // https://www.mongodb.com/cloud/atlas
 const CONNECTION_URL = 'mongodb+srv://memories_project:memories_project123@cluster0.stc1omq.mongodb.net/?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 5000;
 
-//use mongoose to connect to our database
+// use mongoose to connect to our database
 mongoose.connect(CONNECTION_URL)
     // chain a .then because this returns a promise. If our connection is successful, call our app, and then on it call app.listen. That takes two parameters, the PORT and a callback function that returns a console log once our application successfully listens. If connection to DB is not successful, error message
     .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
