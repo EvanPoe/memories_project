@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 // with mongoDB you can create a variety of documents.  Using Schema, we can define exactly what a post will look like
 const postSchema = mongoose.Schema({
