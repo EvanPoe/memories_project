@@ -11,10 +11,10 @@ export const getPosts = () => async (dispatch) => {
         console.log(data);
         dispatch({ type: 'FETCH_ALL', payload: data });
     } catch (error) {
-        console.log(error.message);
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
+        console.log(error);
+        // console.log(error.response.data);
+        // console.log(error.response.status);
+        // console.log(error.response.headers);
     }
 
 }
