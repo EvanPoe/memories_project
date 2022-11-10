@@ -27,4 +27,4 @@ const PORT = process.env.PORT || 5000;
 mongoose.connect(CONNECTION_URL)
     // chain a .then because this returns a promise. If our connection is successful, call our app, and then on it call app.listen. That takes two parameters, the PORT and a callback function that returns a console log once our application successfully listens. If connection to DB is not successful, error message
     .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
-    .catch((error) => console.log(error.message));
+    .catch((error) => console.log(error));
