@@ -20,6 +20,10 @@ app.use(cors());
 // make sure cors is ABOVE your routes!!!
 app.use('/posts', postRoutes);
 
+app.get('/', (req, res) => {
+    res.send('Hello Heroku');
+});
+
 // connect server application to a real database. Mongodb is going to host our DB on their cloud
 // https://www.mongodb.com/cloud/atlas
 const PORT = process.env.PORT || 5000;
