@@ -10,7 +10,7 @@ import Auth from './components/Auth/Auth.js';
 const App = () => {
 
     return (
-        <GoogleOAuthProvider clientId={`${process.env.NEXT_PUBLIC_GOOGLE_API_TOKEN}`}>
+        <GoogleOAuthProvider clientId="741594874203-r3tftovvv3pvd8v9sujbnaq637chi7ab.apps.googleusercontent.com">
             <BrowserRouter>
                 <Container maxwidth="lg">
                     <Navbar />

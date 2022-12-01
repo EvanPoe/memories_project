@@ -8,6 +8,8 @@ import {
   Container,
 } from "@material-ui/core";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { useDispatch } from "react-redux";
+
 import LockedOutlinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./styles";
 import Input from "./Input";
@@ -16,8 +18,8 @@ import Icon from "./Icon";
 const Auth = () => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
-
   const [isSignup, setIsSignUp] = useState(false);
+  const dispatch = useDispatch();
 
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -29,6 +31,21 @@ const Auth = () => {
     setIsSignUp((prevIsSignup) => !prevIsSignup);
     handleShowPassword(false);
   };
+
+  const googleSuccess = async (res) => {
+    const result = res?.profileObj;
+    const token = res?.tokenId;
+
+    try {
+      dispatch({ type: 'AUTH', data: { result, token } });
+    } catch (error) {
+      console.log(error);
+    }
+  }; 
+  const googleFailure = (error) => {
+    console.log(error);
+    console.log('Google Sign In was unsuccessful. Try again later');
+  }; 
 
   return (
     <Container component="main" maxWidth="xs">
@@ -78,8 +95,17 @@ const Auth = () => {
               />
             )}
           </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            {isSignup ? "Sign Up" : "Sign In"}
+          </Button>
           <GoogleLogin
-            client={`${process.env.NEXT_PUBLIC_GOOGLE_API_TOKEN}`}
+            client="741594874203-r3tftovvv3pvd8v9sujbnaq637chi7ab.apps.googleusercontent.com"
             render={(renderProps) => (
               <Button
                 className={classes.googleButton}
@@ -91,17 +117,11 @@ const Auth = () => {
                 variant="contained"
               >Google Sign In</Button>
             )}
+            onSuccess={googleSuccess}
+            onFailure={googleFailure}
+            cookiePolicy="single_host_origin"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            {isSignup ? "Sign Up" : "Sign In"}
-          </Button>
-          <Grid container justify="flex-end">
+          <Grid container justifyContent="flex-end">
             <Grid item>
               <Button onClick={switchMode}>
                 {isSignup
