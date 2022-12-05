@@ -10,6 +10,7 @@ import {
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 
+import jwt_decode from 'jwt-decode';
 import LockedOutlinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./styles";
 import Input from "./Input";
@@ -32,11 +33,10 @@ const Auth = () => {
     handleShowPassword(false);
   };
 
-  const googleSuccess = async (res) => {
-    const result = res?.profileObj;
-    const token = res?.tokenId;
-
+  const googleSuccess = async (response) => {
     try {
+      const result = jwt_decode(response?.credential);
+      const token = response?.credential;
       dispatch({ type: 'AUTH', data: { result, token } });
     } catch (error) {
       console.log(error);
@@ -105,7 +105,6 @@ const Auth = () => {
             {isSignup ? "Sign Up" : "Sign In"}
           </Button>
           <GoogleLogin
-            client="741594874203-r3tftovvv3pvd8v9sujbnaq637chi7ab.apps.googleusercontent.com"
             render={(renderProps) => (
               <Button
                 className={classes.googleButton}
@@ -117,8 +116,8 @@ const Auth = () => {
                 variant="contained"
               >Google Sign In</Button>
             )}
-            onSuccess={googleSuccess}
-            onFailure={googleFailure}
+            onSuccess={(response) => googleSuccess(response)}
+            onError={(error) => console.log(error)}
             cookiePolicy="single_host_origin"
           />
           <Grid container justifyContent="flex-end">
