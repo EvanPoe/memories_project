@@ -5,6 +5,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import postRoutes from './routes/posts.js';
+import userRoutes from './routes/users.js';
 
 // initialize app so we can use all different methods on that app instance 
 // use express middleware to connect to application
@@ -38,6 +39,7 @@ app.use((req, res, next) => {
 // set up starting path for all the routes inside posts.js
 // make sure cors is ABOVE your routes!!!
 app.use('/posts', postRoutes);
+app.use('/user', userRoutes);
 
 app.get('/', (req, res) => {
     res.send('Hello Heroku');
