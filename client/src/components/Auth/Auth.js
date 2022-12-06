@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import jwt_decode from 'jwt-decode';
 import LockedOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -21,6 +22,7 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignUp] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleShowPassword = () =>
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -38,6 +40,8 @@ const Auth = () => {
       const result = jwt_decode(response?.credential);
       const token = response?.credential;
       dispatch({ type: 'AUTH', data: { result, token } });
+
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
