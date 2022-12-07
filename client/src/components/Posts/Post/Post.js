@@ -29,8 +29,8 @@ const Post = ({ post, setCurrentId }) => {
         title={post.title}
       />
       <div className={classes.overlay}>
-        {/* Creator */}
-        <Typography variant="h6">{post.creator}</Typography>
+        {/* Name */}
+        <Typography variant="h6">{post.name}</Typography>
         {/* Created time */}
         <Typography variant="body2">
           {moment(post.createdAt).fromNow()}
