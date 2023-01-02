@@ -15,7 +15,7 @@ export const Navbar = () => {
     const location = useLocation();
 
     // const user = null;
-    console.log(user);
+    // console.log(user);
 
     const logout = () => {
         dispatch({ type: 'LOGOUT' });
